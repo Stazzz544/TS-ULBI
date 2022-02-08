@@ -1,29 +1,28 @@
 
 export interface UserState {
-	users: any[],
 	loading: boolean,
-	error: null | string
+	users: any[],
+	error: null | string,
 }
 
-export enum ActionTypes {
+export enum UserActionType {
 	FETCH_USERS = 'FETCH_USERS',
 	FETCH_USERS_ERROR = 'FETCH_USERS_ERROR',
-	FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS',
+	FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS', 
+} 
+
+interface FetchUsersAction {
+	type: UserActionType.FETCH_USERS
 }
 
-interface fetchingAction{
-	type: ActionTypes.FETCH_USERS,
+interface FetchUserSuccessAction {
+	type: UserActionType.FETCH_USERS_SUCCESS,
+	payload: any[]
 }
 
-interface fetchingActionSuccess{
-	type: ActionTypes.FETCH_USERS_SUCCESS,
-	payload: any[],
-
+interface FetchUserErrorAction {
+	type: UserActionType.FETCH_USERS_ERROR,
+	payload: string
 }
 
-interface fetchingActionError{
-	type: ActionTypes.FETCH_USERS_ERROR,
-	payload: string,
-}
-
-export type ActionCreatorTypes = fetchingAction | fetchingActionSuccess | fetchingActionError
+export type UserAction = FetchUsersAction | FetchUserSuccessAction | FetchUserErrorAction
