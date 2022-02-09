@@ -1,31 +1,24 @@
-import { useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { useTypedSelector } from "../hooks/typedUseSelector"
-import { fetchUsers } from "../store/reducers/actionCreators/fetchUsers"
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { useTypedSelector } from "../store";
+import { fetchUsers } from "../store/actionCreators/fetchUsers";
 
 const UserList: React.FC = () => {
 	const dispatch = useDispatch()
-	const {error, loading, users} = useTypedSelector(state => state.users)
+	const {error, loading, users} = useTypedSelector(state => state.usersReducer)
 
 	useEffect(() => {
 		dispatch(fetchUsers())
 	}, [])
 
+	if(loading) return <div>Идёт загрузка, пожалуйста подождите</div>
+	if(error) return <div>{error}</div>
 
-	if (loading) {
-		return <div>Подождите, идёт загрузка...</div>
-	}
-
-	if (error) {
-		return <div>{error}</div>
-	}
-
-	return(
+	return (
 		<div>
-			<h1>React app</h1>
 			{users.map(user => <div key={user.id}>{user.name}</div>)}
 		</div>
 	)
 }
 
-export default UserList
+export default UserList;
